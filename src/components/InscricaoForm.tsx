@@ -22,6 +22,24 @@ export default function InscricaoForm({ players, onSuccess }: InscricaoFormProps
     setTimeout(() => setMessage(null), 7000);
   }
 
+  function formatWhatsapp(value: string) {
+    const digits = normalizeWpp(value).slice(0, 11);
+
+    if (digits.length <= 2) {
+      return digits ? `(${digits}` : "";
+    }
+
+    if (digits.length <= 6) {
+      return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    }
+
+    if (digits.length <= 10) {
+      return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    }
+
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -126,9 +144,10 @@ export default function InscricaoForm({ players, onSuccess }: InscricaoFormProps
               type="tel"
               id="inp-wpp"
               value={wpp}
-              onChange={(e) => setWpp(e.target.value)}
+              onChange={(e) => setWpp(formatWhatsapp(e.target.value))}
               placeholder="(00) 00000-0000"
-              maxLength={20}
+              inputMode="numeric"
+              maxLength={15}
               className="w-full px-3 py-2.5 bg-[var(--color-background)] border border-[var(--color-border)] rounded-lg text-sm text-white placeholder:text-[var(--color-text-muted)]/60 focus:outline-none focus:border-[var(--color-gold)]/50 focus:ring-1 focus:ring-[var(--color-gold)]/20 transition-all"
             />
           </div>
