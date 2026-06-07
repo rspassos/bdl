@@ -1,0 +1,274 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+.bdl-root{font-family:'Barlow',sans-serif;background:var(--color-background-tertiary);color:var(--color-text-primary);padding:0 0 3rem;}
+.bdl-hero{display:flex;flex-direction:column;align-items:center;padding:2rem 1rem 1.5rem;border-bottom:0.5px solid var(--color-border-tertiary);}
+.bdl-title{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;letter-spacing:.12em;color:#D4A017;text-align:center;margin-bottom:2px;}
+.bdl-sub{font-size:12px;color:var(--color-text-secondary);letter-spacing:.2em;text-align:center;text-transform:uppercase;}
+.bdl-body{max-width:660px;margin:0 auto;padding:1.5rem 1rem 0;}
+.status-bar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem;}
+.stat-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;text-align:center;}
+.stat-label{font-size:11px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
+.stat-number{font-family:'Rajdhani',sans-serif;font-size:36px;font-weight:700;line-height:1;}
+.stat-number.reg{color:var(--color-text-success);}
+.stat-number.nee{color:var(--color-text-warning);}
+.chart-section{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.5rem;}
+.chart-wrap{position:relative;width:160px;height:160px;flex-shrink:0;}
+.chart-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;}
+.chart-pct{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;display:block;color:var(--color-text-primary);}
+.chart-pct-label{font-size:10px;color:var(--color-text-secondary);letter-spacing:.05em;}
+.chart-legend{flex:1;}
+.legend-item{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.legend-dot.ins{background:#2ea855;}
+.legend-dot.falt{background:#c8a020;}
+.legend-text{font-size:13px;color:var(--color-text-secondary);}
+.legend-val{font-weight:600;font-size:14px;color:var(--color-text-primary);margin-left:auto;}
+.prog-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:5px;letter-spacing:.05em;}
+.prog-track{height:8px;background:var(--color-background-tertiary);border-radius:4px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,#1a8c3e,#2ea855);border-radius:4px;transition:width .6s ease;}
+.form-section{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1.25rem;}
+.form-title{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;color:var(--color-text-primary);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:8px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-label{font-size:11px;color:var(--color-text-secondary);letter-spacing:.05em;text-transform:uppercase;}
+.form-group input{width:100%;}
+.btn-submit{width:100%;padding:.75rem;background:var(--color-background-success);color:var(--color-text-success);border:1px solid var(--color-border-success);border-radius:var(--border-radius-md);font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:opacity .15s,transform .1s;}
+.btn-submit:hover{opacity:.85;}
+.btn-submit:active{transform:scale(.99);}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;}
+.msg-area{margin-top:10px;padding:10px 14px;border-radius:var(--border-radius-md);font-size:13px;display:none;line-height:1.5;}
+.msg-area.success{background:var(--color-background-success);color:var(--color-text-success);border:0.5px solid var(--color-border-success);display:block;}
+.msg-area.error{background:var(--color-background-danger);color:var(--color-text-danger);border:0.5px solid var(--color-border-danger);display:block;}
+.players-section{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;}
+.section-title{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;color:var(--color-text-primary);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between;}
+.player-list{display:flex;flex-direction:column;gap:8px;}
+.player-row{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--color-background-tertiary);border-radius:var(--border-radius-md);font-size:13px;}
+.player-num{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;color:var(--color-text-secondary);min-width:22px;}
+.player-nick{font-weight:600;color:var(--color-text-primary);flex:1;}
+.player-discord{color:var(--color-text-secondary);font-size:12px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.empty-state{text-align:center;padding:2rem;color:var(--color-text-secondary);font-size:14px;}
+.refresh-btn{background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:4px 10px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;display:flex;align-items:center;gap:4px;}
+.refresh-btn:hover{background:var(--color-background-tertiary);}
+.spinning{animation:spin .8s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.sync-note{font-size:11px;color:var(--color-text-secondary);text-align:center;margin-top:8px;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+</style>
+
+<div class="bdl-root">
+  <h2 class="sr-only">Sistema de inscrição Brasil Draft League — QuakeWorld 4v4. Mínimo de 24 jogadores para iniciar.</h2>
+  <div class="bdl-hero">
+    <img src="https://i.imgur.com/iWfbdvr.jpeg" alt="BDL Brasil Draft League" style="width:160px;height:160px;object-fit:contain;margin-bottom:.75rem;border-radius:8px;" />
+    <div class="bdl-title">INSCRIÇÕES ABERTAS</div>
+    <div class="bdl-sub">Temporada 2026 · Fase de Draft</div>
+  </div>
+
+  <div class="bdl-body">
+    <div class="status-bar">
+      <div class="stat-card">
+        <div class="stat-label"><i class="ti ti-users" aria-hidden="true"></i> Inscritos</div>
+        <div class="stat-number reg" id="countReg">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><i class="ti ti-target" aria-hidden="true"></i> Faltam</div>
+        <div class="stat-number nee" id="countNeed">—</div>
+      </div>
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-wrap">
+        <canvas id="pizzaChart" width="160" height="160" role="img" aria-label="Pizza mostrando progresso de inscrições">Progresso das inscrições.</canvas>
+        <div class="chart-center">
+          <span class="chart-pct" id="pctText">—</span>
+          <span class="chart-pct-label">do mínimo</span>
+        </div>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item">
+          <span class="legend-dot ins"></span>
+          <span class="legend-text">Inscritos</span>
+          <span class="legend-val" id="legIns">—</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot falt"></span>
+          <span class="legend-text">Vagas abertas</span>
+          <span class="legend-val" id="legFalt">—</span>
+        </div>
+        <div style="margin-top:10px;">
+          <div class="prog-label">Progresso até o mínimo (24 players)</div>
+          <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-title"><i class="ti ti-user-plus" aria-hidden="true"></i> Faça sua inscrição</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label" for="inp-name">Nome completo</label>
+          <input type="text" id="inp-name" placeholder="Seu nome" maxlength="80"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="inp-wpp">WhatsApp</label>
+          <input type="tel" id="inp-wpp" placeholder="(00) 00000-0000" maxlength="20"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="inp-discord">Discord</label>
+          <input type="text" id="inp-discord" placeholder="usuário ou @usuário" maxlength="60"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="inp-nick">Nick no campeonato</label>
+          <input type="text" id="inp-nick" placeholder="Ex: Swensteiger" maxlength="40"/>
+        </div>
+      </div>
+      <button class="btn-submit" id="btn-inscr" onclick="inscrever()">
+        <i class="ti ti-tournament" aria-hidden="true"></i> CONFIRMAR INSCRIÇÃO
+      </button>
+      <div class="msg-area" id="msg-area"></div>
+    </div>
+
+    <div class="players-section">
+      <div class="section-title">
+        <span><i class="ti ti-list" aria-hidden="true"></i> Players Inscritos</span>
+        <button class="refresh-btn" onclick="carregarPlayers(true)" id="ref-btn">
+          <i class="ti ti-refresh" id="ref-icon" aria-hidden="true"></i> atualizar
+        </button>
+      </div>
+      <div class="player-list" id="player-list">
+        <div class="empty-state">Carregando...</div>
+      </div>
+      <div class="sync-note" id="sync-note"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyY3B_2GTa7qssOfkX9QJFfvURKOfcTDe1BqiScVh4ZEZuSbapEJCSfSU72K3kHRbJQ/exec';
+const MIN = 24;
+let players = [];
+let chart = null;
+let lastSync = null;
+
+function normalizeWpp(w){return String(w).replace(/\D/g,'');}
+
+function buildChart(){
+  const ctx=document.getElementById('pizzaChart').getContext('2d');
+  chart=new Chart(ctx,{
+    type:'doughnut',
+    data:{datasets:[{data:[0.001,MIN],backgroundColor:['#2ea855','#c8a020'],borderColor:['#1a6a35','#8a6a10'],borderWidth:1,hoverOffset:4}]},
+    options:{responsive:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{enabled:false}},animation:{animateRotate:true,duration:700}}
+  });
+}
+
+function updateUI(){
+  const ins=players.length;
+  const falt=Math.max(0,MIN-ins);
+  const pct=Math.min(100,Math.round((ins/MIN)*100));
+  chart.data.datasets[0].data=ins===0?[0.001,MIN]:[ins,falt];
+  chart.update();
+  document.getElementById('countReg').textContent=ins;
+  document.getElementById('countNeed').textContent=falt;
+  document.getElementById('pctText').textContent=pct+'%';
+  document.getElementById('legIns').textContent=ins+' player'+(ins!==1?'s':'');
+  document.getElementById('legFalt').textContent=falt+' vaga'+(falt!==1?'s':'');
+  document.getElementById('progFill').style.width=pct+'%';
+  const list=document.getElementById('player-list');
+  if(players.length===0){
+    list.innerHTML='<div class="empty-state">Nenhum inscrito ainda. Seja o primeiro!</div>';
+  } else {
+    list.innerHTML=players.map((p,i)=>
+      `<div class="player-row">
+        <span class="player-num">${i+1}</span>
+        <span class="player-nick">${esc(p.nick)}</span>
+        <span class="player-discord">${esc(p.discord)}</span>
+      </div>`
+    ).join('');
+  }
+  if(lastSync){
+    const h=lastSync.getHours().toString().padStart(2,'0');
+    const m=lastSync.getMinutes().toString().padStart(2,'0');
+    const s=lastSync.getSeconds().toString().padStart(2,'0');
+    document.getElementById('sync-note').textContent='Última atualização: '+h+':'+m+':'+s;
+  }
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function showMsg(txt,type){
+  const el=document.getElementById('msg-area');
+  el.className='msg-area '+type;
+  el.textContent=txt;
+  setTimeout(()=>{el.className='msg-area';},7000);
+}
+
+async function carregarPlayers(manual){
+  const icon=document.getElementById('ref-icon');
+  icon.classList.add('spinning');
+  try{
+    const r=await fetch(SCRIPT_URL,{method:'GET',mode:'cors'});
+    const text=await r.text();
+    const data=JSON.parse(text);
+    if(data.players){players=data.players;lastSync=new Date();updateUI();}
+  }catch(e){
+    if(manual)showMsg('Erro ao buscar dados. Tente novamente.','error');
+  }
+  icon.classList.remove('spinning');
+}
+
+async function inscrever(){
+  const nome=document.getElementById('inp-name').value.trim();
+  const wpp=document.getElementById('inp-wpp').value.trim();
+  const discord=document.getElementById('inp-discord').value.trim();
+  const nick=document.getElementById('inp-nick').value.trim();
+
+  if(!nome||!wpp||!discord||!nick){showMsg('Preencha todos os campos para se inscrever.','error');return;}
+
+  const wppNorm=normalizeWpp(wpp);
+  if(wppNorm.length<10){showMsg('Digite um WhatsApp válido com DDD.','error');return;}
+
+  const wppDup=players.find(p=>normalizeWpp(p.whatsapp)===wppNorm);
+  if(wppDup){showMsg(`Este WhatsApp já está inscrito com o nick "${wppDup.nick}". Cada jogador pode se inscrever apenas uma vez.`,'error');return;}
+
+  const nickDup=players.find(p=>p.nick.toLowerCase()===nick.toLowerCase());
+  if(nickDup){showMsg(`O nick "${nick}" já está em uso. Escolha outro nick.`,'error');return;}
+
+  const btn=document.getElementById('btn-inscr');
+  btn.disabled=true;
+  btn.textContent='Enviando...';
+
+  try{
+    await fetch(SCRIPT_URL,{
+      method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({nome,whatsapp:wpp,discord,nick,ts:new Date().toISOString()})
+    });
+
+    document.getElementById('inp-name').value='';
+    document.getElementById('inp-wpp').value='';
+    document.getElementById('inp-discord').value='';
+    document.getElementById('inp-nick').value='';
+
+    players.push({nome,whatsapp:wpp,discord,nick});
+    updateUI();
+
+    const falt=MIN-players.length;
+    showMsg(
+      falt<=0?`${nick} inscrito! Mínimo atingido — campeonato pode começar!`:`${nick} inscrito com sucesso! Faltam ${falt} players.`,
+      'success'
+    );
+    setTimeout(()=>carregarPlayers(false),3000);
+  }catch(e){
+    showMsg('Erro ao enviar inscrição. Tente novamente.','error');
+  }
+
+  btn.disabled=false;
+  btn.innerHTML='<i class="ti ti-tournament" aria-hidden="true"></i> CONFIRMAR INSCRIÇÃO';
+}
+
+buildChart();
+carregarPlayers(false);
+setInterval(()=>carregarPlayers(false),30000);
+</script>
