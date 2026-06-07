@@ -12,6 +12,7 @@ export default function Home() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [lastSync, setLastSync] = useState<Date | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   const loadPlayers = useCallback(async (manual = false) => {
     if (manual) setRefreshing(true);
@@ -21,14 +22,19 @@ export default function Home() {
       setLastSync(new Date());
     } catch {
       // silently fail on auto-refresh
+    } finally {
+      setInitialLoading(false);
+      if (manual) setRefreshing(false);
     }
-    if (manual) setRefreshing(false);
   }, []);
 
   useEffect(() => {
-    loadPlayers();
+    const firstLoad = window.setTimeout(() => loadPlayers(), 0);
     const interval = setInterval(() => loadPlayers(), 30000);
-    return () => clearInterval(interval);
+    return () => {
+      window.clearTimeout(firstLoad);
+      clearInterval(interval);
+    };
   }, [loadPlayers]);
 
   function handleInscricaoSuccess(newPlayer: Player) {
@@ -48,6 +54,7 @@ export default function Home() {
           lastSync={lastSync}
           onRefresh={() => loadPlayers(true)}
           refreshing={refreshing}
+          loading={initialLoading}
         />
       </div>
     </main>

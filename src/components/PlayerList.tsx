@@ -1,6 +1,6 @@
 "use client";
 
-import { RefreshCw, List } from "lucide-react";
+import { RefreshCw, List, Loader2 } from "lucide-react";
 import { Player } from "@/lib/api";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -9,9 +9,10 @@ interface PlayerListProps {
   lastSync: Date | null;
   onRefresh: () => void;
   refreshing: boolean;
+  loading: boolean;
 }
 
-export default function PlayerList({ players, lastSync, onRefresh, refreshing }: PlayerListProps) {
+export default function PlayerList({ players, lastSync, onRefresh, refreshing, loading }: PlayerListProps) {
   const syncText = lastSync
     ? `Última atualização: ${lastSync.toLocaleTimeString("pt-BR")}`
     : "";
@@ -25,6 +26,7 @@ export default function PlayerList({ players, lastSync, onRefresh, refreshing }:
         </h2>
         <button
           onClick={onRefresh}
+          disabled={loading || refreshing}
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[var(--color-text-muted)] border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-surface-hover)] hover:text-white transition-all duration-150"
         >
           <RefreshCw size={12} className={refreshing ? "animate-spin-slow" : ""} />
@@ -34,7 +36,17 @@ export default function PlayerList({ players, lastSync, onRefresh, refreshing }:
 
       <div className="flex flex-col gap-2 max-h-[400px] overflow-y-auto pr-1">
         <AnimatePresence mode="popLayout">
-          {players.length === 0 ? (
+          {loading ? (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex items-center justify-center gap-2 py-8 text-[var(--color-text-muted)] text-sm"
+            >
+              <Loader2 size={16} className="animate-spin" />
+              Carregando inscritos...
+            </motion.div>
+          ) : players.length === 0 ? (
             <motion.div
               key="empty"
               initial={{ opacity: 0 }}
